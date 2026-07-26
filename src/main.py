@@ -7,8 +7,8 @@ ldr.atten(ADC.ATTN_11DB)
 btn = Pin(14, Pin.IN, Pin.PULL_UP)
 
 # RAW alto = pouca luz (bloqueado) | RAW baixo = muita luz (livre) -- relação invertida
-RAW_LIVRE_MAX = 500      # abaixo disso = luz alta = linha livre
-RAW_BLOQUEIO_MIN = 1500  # acima disso = luz baixa = peça bloqueando
+RAW_LIVRE_MAX = 1200     # abaixo disso = luz alta = linha livre
+RAW_BLOQUEIO_MIN = 1800  # acima disso = luz baixa = peça bloqueando
 
 LIMIAR_MICROPARADA_MS = 5000
 INTERVALO_LEITURA_MS = 100
