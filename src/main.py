@@ -63,14 +63,14 @@ def main():
 
         if time.ticks_diff(agora, btn_ultima_mudanca_ms) >= DEBOUNCE_MS:
             if leitura_atual != btn_estavel:
+                estava_pressionado = (btn_estavel == 0)
                 btn_estavel = leitura_atual
-                if btn_estavel == 0:
+                if btn_estavel == 1 and estava_pressionado:  # soltou (borda de subida)
                     total_pecas = 0
                     estado_atual = ESTADO_LIVRE
                     bloqueio_inicio_ms = None
                     microparada_disparada = False
                     print("Turno resetado com sucesso. Contadores zerados.")
-
 
 if __name__ == "__main__":
     main()
