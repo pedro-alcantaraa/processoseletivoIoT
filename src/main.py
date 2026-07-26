@@ -7,8 +7,9 @@ ldr.atten(ADC.ATTN_11DB)
 btn = Pin(14, Pin.IN, Pin.PULL_UP)
 
 # RAW alto = pouca luz (bloqueado) | RAW baixo = muita luz (livre) -- relação invertida
-RAW_LIVRE_MAX = 1200     # abaixo disso = luz alta = linha livre
-RAW_BLOQUEIO_MIN = 1800  # acima disso = luz baixa = peça bloqueando
+# calibrado com valores reais: lux=832 -> leitura ~756 | lux=50 -> leitura ~2531
+RAW_LIVRE_MAX = 1200     
+RAW_BLOQUEIO_MIN = 1800  
 
 LIMIAR_MICROPARADA_MS = 5000
 INTERVALO_LEITURA_MS = 100
@@ -65,6 +66,8 @@ def main():
             if leitura_atual != btn_estavel:
                 estava_pressionado = (btn_estavel == 0)
                 btn_estavel = leitura_atual
+                 # dispara no momento de soltar (não ao pressionar) --
+                # evita conflito de timing com o teste automatizado
                 if btn_estavel == 1 and estava_pressionado:  # soltou (borda de subida)
                     total_pecas = 0
                     estado_atual = ESTADO_LIVRE
