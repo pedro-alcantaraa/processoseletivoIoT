@@ -6,19 +6,16 @@ ldr.atten(ADC.ATTN_11DB)
 
 btn = Pin(14, Pin.IN, Pin.PULL_UP)
 
-LUX_LIVRE = 500
-LUX_BLOQUEIO = 100
+# RAW alto = pouca luz (bloqueado) | RAW baixo = muita luz (livre) -- relação invertida
+RAW_LIVRE_MAX = 500      # abaixo disso = luz alta = linha livre
+RAW_BLOQUEIO_MIN = 1500  # acima disso = luz baixa = peça bloqueando
+
 LIMIAR_MICROPARADA_MS = 5000
 INTERVALO_LEITURA_MS = 100
 DEBOUNCE_MS = 50
 
 ESTADO_LIVRE = "livre"
 ESTADO_BLOQUEADO = "bloqueado"
-
-
-def ler_lux():
-    raw = ldr.read()
-    return int((raw / 4095) * 1000)
 
 
 def main():
@@ -40,14 +37,14 @@ def main():
 
         if time.ticks_diff(agora, ultima_leitura_ms) >= INTERVALO_LEITURA_MS:
             ultima_leitura_ms = agora
-            lux = ler_lux()
+            raw = ldr.read()
 
-            if estado_atual == ESTADO_LIVRE and lux < LUX_BLOQUEIO:
+            if estado_atual == ESTADO_LIVRE and raw >= RAW_BLOQUEIO_MIN:
                 estado_atual = ESTADO_BLOQUEADO
                 bloqueio_inicio_ms = agora
                 microparada_disparada = False
 
-            elif estado_atual == ESTADO_BLOQUEADO and lux > LUX_LIVRE:
+            elif estado_atual == ESTADO_BLOQUEADO and raw <= RAW_LIVRE_MAX:
                 total_pecas += 1
                 print("Peca detectada! Total: {}".format(total_pecas))
                 estado_atual = ESTADO_LIVRE
@@ -73,10 +70,6 @@ def main():
                     bloqueio_inicio_ms = None
                     microparada_disparada = False
                     print("Turno resetado com sucesso. Contadores zerados.")
-
-
-if __name__ == "__main__":
-    main()
 
 
 if __name__ == "__main__":
