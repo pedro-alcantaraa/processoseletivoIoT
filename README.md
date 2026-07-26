@@ -66,4 +66,6 @@ Testei manualmente na simulação do Wokwi, mudando os valores e observando o te
 
 ## 6️⃣ Comentários Adicionais
 
-A parte que me deu mais trabalho foi o botão — na primeira versão, sem debounce, um clique só gerava várias mensagens de reset ao mesmo tempo. Resolvi isso esperando o valor ficar estável por 50ms antes de considerar válido, em vez de reagir na primeira leitura que muda. Também tive que ter cuidado pra não usar delay em nenhum ponto do código, já que o teste automatizado altera os valores em momentos certos e um delay longo poderia fazer o firmware perder essa mudança.
+A parte que me deu mais trabalho foi o botão — na primeira versão, sem debounce, um clique só gerava várias mensagens de reset ao mesmo tempo. Resolvi isso esperando o valor ficar estável por 50ms antes de considerar válido, em vez de reagir na primeira leitura que muda. 
+
+Também tive que ter cuidado pra não usar delay em nenhum ponto do código, já que o teste automatizado altera os valores em momentos certos e um delay longo poderia fazer o firmware perder essa mudança.
